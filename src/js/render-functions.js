@@ -1,23 +1,24 @@
 // Описаний у документації
-import SimpleLightbox from "simplelightbox";
+import SimpleLightbox from 'simplelightbox';
 // Додатковий імпорт стилів
-import "simplelightbox/dist/simple-lightbox.min.css";
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const gallery = document.querySelector('.gallery');
-const loader = document.querySelector('.loader-hidden');
+
+const loader = document.querySelector('.loader');
 
 let galleryLight = null;
 
 export function createGallery(images) {
-
-    let markup = images.map(image => `<li class="item-gallery">
+  const markup = images
+    .map(
+      image => `<li class="item-gallery">
         <a href="${image.largeImageURL}"><img src="${image.webformatURL}" alt="${image.tags}" width="360px" height="152px"> </a>
         <ul class="card-info">
           <li>
             <h4>Likes</h4>
             <p>${image.likes}</p>
           </li>
-
           <li>
             <h4>Views</h4>
             <p>${image.views}</p>
@@ -31,33 +32,34 @@ export function createGallery(images) {
             <p>${image.downloads}</p>
           </li>
         </ul>
-      </li>`).join('');
+      </li>`
+    )
+    .join('');
 
-    gallery.insertAdjacentHTML('afterbegin', markup);
+  gallery.insertAdjacentHTML('afterbegin', markup);
 
-    if (!galleryLight) {
-        galleryLight = new SimpleLightbox('.gallery a', {
-            captionsData: 'alt',
-            captionDelay: 250
-        });
-    } else {
-        galleryLight.refresh();
-    }
+  if (!galleryLight) {
+    galleryLight = new SimpleLightbox('.gallery a', {
+      captionsData: 'alt',
+      captionDelay: 250,
+    });
+  } else {
+    galleryLight.refresh();
+  }
 }
 
-
 export function clearGallery() {
-    gallery.innerHTML = '';
+  gallery.innerHTML = '';
 }
 
 export function showLoader() {
-    if (loader) {
-        loader.classList.add('is-active');
-    }
+  if (loader) {
+    loader.classList.remove('loader-hidden');
+  }
 }
 
 export function hideLoader() {
-    if (loader) {
-        loader.classList.remove('is-active');
-    }
+  if (loader) {
+    loader.classList.add('loader-hidden');
+  }
 }
